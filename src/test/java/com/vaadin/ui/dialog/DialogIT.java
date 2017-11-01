@@ -81,10 +81,4 @@ public class DialogIT extends ComponentDemoTest {
         new Actions(getDriver()).sendKeys(Keys.ESCAPE).perform();
         waitForElementNotPresent(By.tagName(DIALOG_OVERLAY_TAG));
     }
-
-    @Override
-    protected String getTestPath() {
-        return "/";
-    }
-
 }
