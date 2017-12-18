@@ -15,12 +15,12 @@
  */
 package com.vaadin.flow.component.dialog.demo;
 
+import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.demo.DemoView;
-import com.vaadin.router.Route;
+import com.vaadin.flow.router.Route;
 import com.vaadin.ui.button.Button;
-import com.vaadin.ui.common.HtmlImport;
 import com.vaadin.ui.layout.HorizontalLayout;
 
 /**
