@@ -58,4 +58,46 @@ public class Dialog extends GeneratedVaadinDialog<Dialog> {
         setOpened(false);
     }
 
+    /**
+     * Gets whether this dialog can be closed by hitting the esc-key or not.
+     * 
+     * @return {@code true} if this dialog can be closed with the esc-key,
+     *         {@code false} otherwise
+     */
+    public boolean isCloseOnEsc() {
+        return !getElement().getProperty("noCloseOnEsc", false);
+    }
+
+    /**
+     * Sets whether this dialog can be closed by hitting the esc-key or not.
+     * 
+     * @param closeOnEsc
+     *            {@code true} to enable closing this dialog with the esc-key,
+     *            {@code false} to disable it
+     */
+    public void setCloseOnEsc(boolean closeOnEsc) {
+        getElement().setProperty("noCloseOnEsc", !closeOnEsc);
+    }
+
+    /**
+     * Gets whether this dialog can be closed by clicking outside of it or not.
+     * 
+     * @return {@code true} if this dialog can be closed by an outside click,
+     *         {@code false} otherwise
+     */
+    public boolean isCloseOnOutsideClick() {
+        return !getElement().getProperty("noCloseOnOutsideClick", false);
+    }
+
+    /**
+     * Sets whether this dialog can be closed by clicking outside of it or not.
+     * 
+     * @param closeOnEsc
+     *            {@code true} to enable closing this dialog with an outside
+     *            click, {@code false} to disable it
+     */
+    public void setCloseOnOutsideClick(boolean closeOnOutsideClick) {
+        getElement().setProperty("noCloseOnOutsideClick", !closeOnOutsideClick);
+    }
+
 }
