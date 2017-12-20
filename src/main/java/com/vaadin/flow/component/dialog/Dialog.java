@@ -68,6 +68,16 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
         add(components);
     }
 
+    /**
+     * Adds the given components into this dialog.
+     * <p>
+     * The elements in the DOM will not be children of the
+     * {@code <vaadin-dialog>} element, but will be inserted into an overlay
+     * that is attached into the {@code <body>}.
+     *
+     * @param components
+     *            the components to add
+     */
     @Override
     public void add(Component... components) {
         assert components != null;
@@ -147,6 +157,11 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
 
     /**
      * Opens the dialog.
+     * <p>
+     * Note: You don't need to add the dialog component anywhere before opening
+     * it. Since {@code <vaadin-dialog>}'s location in the DOM doesn't really
+     * matter, opening a dialog will automatically add it to the {@code <body>}
+     * if it's not yet attached anywhere.
      */
     public void open() {
         setOpened(true);
@@ -159,12 +174,21 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
         setOpened(false);
     }
 
+    /**
+     * Opens or closes the dialog.
+     * <p>
+     * Note: You don't need to add the dialog component anywhere before opening
+     * it. Since {@code <vaadin-dialog>}'s location in the DOM doesn't really
+     * matter, opening a dialog will automatically add it to the {@code <body>}
+     * if it's not yet attached anywhere.
+     * 
+     * @param opened
+     *            {@code true} to open the dialog, {@code false} to close it
+     */
     @Override
     public void setOpened(boolean opened) {
         if (opened && !getElement().getNode().isAttached()
                 && UI.getCurrent() != null) {
-            // Add the element to body when it's opened,
-            // if it hasn't been attached already somewhere.
             UI.getCurrent().add(this);
         }
         super.setOpened(opened);
