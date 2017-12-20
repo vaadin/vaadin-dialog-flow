@@ -41,18 +41,20 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
         container = new Element("div", false);
         getElement().appendVirtualChild(container);
 
-        getElement().getNode().runWhenAttached(ui -> {
-            String appId = ui.getSession().getService()
-                    .getMainDivId(ui.getSession(), VaadinRequest.getCurrent());
-            appId = appId.substring(0, appId.indexOf("-"));
+        // Attach <flow-component-renderer>
+        getElement().getNode()
+                .runWhenAttached(ui -> ui.beforeClientResponse(this, () -> {
+                    String appId = ui.getSession().getService().getMainDivId(
+                            ui.getSession(), VaadinRequest.getCurrent());
+                    appId = appId.substring(0, appId.indexOf("-"));
 
-            int nodeId = container.getNode().getId();
+                    int nodeId = container.getNode().getId();
 
-            String template = "<template><flow-component-renderer appid="
-                    + appId + " nodeid=" + nodeId
-                    + "></flow-component-renderer></template>";
-            getElement().setProperty("innerHTML", template);
-        });
+                    String template = "<template><flow-component-renderer appid="
+                            + appId + " nodeid=" + nodeId
+                            + "></flow-component-renderer></template>";
+                    getElement().setProperty("innerHTML", template);
+                }));
     }
 
     /**
