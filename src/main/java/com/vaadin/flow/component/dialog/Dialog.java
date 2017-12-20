@@ -42,9 +42,8 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
         getElement().appendVirtualChild(container);
 
         getElement().getNode().runWhenAttached(ui -> {
-            String appId = UI.getCurrent().getSession().getService()
-                    .getMainDivId(UI.getCurrent().getSession(),
-                            VaadinRequest.getCurrent());
+            String appId = ui.getSession().getService()
+                    .getMainDivId(ui.getSession(), VaadinRequest.getCurrent());
             appId = appId.substring(0, appId.indexOf("-"));
 
             int nodeId = container.getNode().getId();
