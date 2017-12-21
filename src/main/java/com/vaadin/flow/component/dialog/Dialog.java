@@ -20,14 +20,12 @@ import com.vaadin.flow.component.HasComponents;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.dom.Element;
-import com.vaadin.flow.server.VaadinRequest;
 
 /**
  * Server-side component for the {@code <vaadin-dialog>} element.
  * 
  * @author Vaadin Ltd
  */
-@HtmlImport("bower_components/polymer/polymer.html")
 @HtmlImport("frontend://flow-component-renderer.html")
 public class Dialog extends GeneratedVaadinDialog<Dialog>
         implements HasComponents {
@@ -42,19 +40,8 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
         getElement().appendVirtualChild(container);
 
         // Attach <flow-component-renderer>
-        getElement().getNode()
-                .runWhenAttached(ui -> ui.beforeClientResponse(this, () -> {
-                    String appId = ui.getSession().getService().getMainDivId(
-                            ui.getSession(), VaadinRequest.getCurrent());
-                    appId = appId.substring(0, appId.indexOf("-"));
-
-                    int nodeId = container.getNode().getId();
-
-                    String template = "<template><flow-component-renderer appid="
-                            + appId + " nodeid=" + nodeId
-                            + "></flow-component-renderer></template>";
-                    getElement().setProperty("innerHTML", template);
-                }));
+        getElement().getNode().runWhenAttached(ui -> ui
+                .beforeClientResponse(this, () -> attachComponentRenderer()));
     }
 
     /**
@@ -193,6 +180,15 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
             UI.getCurrent().add(this);
         }
         super.setOpened(opened);
+    }
+
+    private void attachComponentRenderer() {
+        String appId = UI.getCurrent().getInternals().getAppId();
+        int nodeId = container.getNode().getId();
+        String template = "<template><flow-component-renderer appid=" + appId
+                + " nodeid=" + nodeId
+                + "></flow-component-renderer></template>";
+        getElement().setProperty("innerHTML", template);
     }
 
 }
