@@ -30,7 +30,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.webjars.bower</groupId>
+            <groupId>org.webjars.bowergithub.vaadin</groupId>
             <artifactId>vaadin-dialog</artifactId>
         </dependency>
         <dependency>
