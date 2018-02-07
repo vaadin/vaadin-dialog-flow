@@ -30,12 +30,16 @@ import com.vaadin.flow.dom.Element;
 public class Dialog extends GeneratedVaadinDialog<Dialog>
         implements HasComponents {
 
+    private Element template;
     private Element container;
 
     /**
      * Creates an empty dialog.
      */
     public Dialog() {
+        template = new Element("template");
+        getElement().appendChild(template);
+
         container = new Element("div", false);
         getElement().appendVirtualChild(container);
 
@@ -194,11 +198,9 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
     private void attachComponentRenderer() {
         String appId = UI.getCurrent().getInternals().getAppId();
         int nodeId = container.getNode().getId();
-        String template = "<template><flow-component-renderer appid=" + appId
-                + " nodeid=" + nodeId
-                + "></flow-component-renderer></template>";
-        getElement().setProperty("innerHTML", template);
+        String renderer = "<flow-component-renderer appid=" + appId + " nodeid="
+                + nodeId + "></flow-component-renderer>";
+        template.setProperty("innerHTML", renderer);
     }
 
 }
-
