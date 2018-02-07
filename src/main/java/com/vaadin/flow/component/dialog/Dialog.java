@@ -37,7 +37,7 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
      * Creates an empty dialog.
      */
     public Dialog() {
-        template = new Element("template");
+        template = new Element("template", false);
         getElement().appendChild(template);
 
         container = new Element("div", false);
@@ -198,8 +198,9 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
     private void attachComponentRenderer() {
         String appId = UI.getCurrent().getInternals().getAppId();
         int nodeId = container.getNode().getId();
-        String renderer = "<flow-component-renderer appid=" + appId + " nodeid="
-                + nodeId + "></flow-component-renderer>";
+        String renderer = String.format(
+                "<flow-component-renderer appid=\"%s\" nodeid=\"%s\"></flow-component-renderer>",
+                appId, nodeId);
         template.setProperty("innerHTML", renderer);
     }
 
