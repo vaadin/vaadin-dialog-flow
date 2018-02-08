@@ -19,6 +19,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -68,9 +69,7 @@ public class DialogTestPageIT extends AbstractComponentIT {
     private void assertDialogContent(String expected) {
         List<WebElement> dialogs = getDialogs();
         String content = dialogs.iterator().next().getText();
-        Assert.assertTrue(String.format(
-                "Expected the dialog to contain string '%s', but got '%s'",
-                expected, content), content.contains(expected));
+        Assert.assertThat(content, CoreMatchers.containsString(expected));
     }
 
     private List<WebElement> getDialogs() {

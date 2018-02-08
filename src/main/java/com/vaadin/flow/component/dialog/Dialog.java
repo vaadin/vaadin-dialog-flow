@@ -197,6 +197,13 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
         return super.isOpenedBoolean();
     }
 
+    /**
+     * Add a lister for event fired by the {@code opened-changed} events.
+     * 
+     * @param: listener
+     *             the listener to add;
+     * @return: a Registration for removing the event listener
+     */
     @Override
     public Registration addOpenedChangeListener(
             ComponentEventListener<OpenedChangeEvent<Dialog>> listener) {
