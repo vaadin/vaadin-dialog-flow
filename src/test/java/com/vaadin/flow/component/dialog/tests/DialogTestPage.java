@@ -47,7 +47,7 @@ public class DialogTestPage extends Div {
         dialog.add(
                 new Label("There is a opened change listener for this dialog"));
         button.addClickListener(event -> dialog.open());
-        
+
         dialog.addOpenedChangeListener(event -> message.setText(
                 "The open state of the dialog is " + dialog.isOpened()));
         add(button, message, dialog);
