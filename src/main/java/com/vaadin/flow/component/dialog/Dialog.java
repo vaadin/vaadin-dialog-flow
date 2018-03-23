@@ -20,9 +20,11 @@ import java.util.stream.Stream.Builder;
 
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.DetachEvent;
+import com.vaadin.flow.component.DomEvent;
 import com.vaadin.flow.component.HasComponents;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.HtmlImport;
@@ -66,6 +68,39 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
                 autoAddedToTheUi = false;
             }
         });
+
+        UI.getCurrent().getPage().executeJavaScript(
+                "var f = function(e) {"
+              + "  e.preventDefault();"
+              + "  $0.dispatchEvent(new CustomEvent('vaadin-dialog-close-action'));"
+              + "};"
+              + "$0.$.overlay.addEventListener('vaadin-overlay-outside-click', f);"
+              + "$0.$.overlay.addEventListener('vaadin-overlay-escape-press', f);", getElement());
+    }
+
+    /**
+     * `vaadin-dialog-close-action` is sent when the user clicks outside the
+     * overlay or presses the escape key.
+     */
+    @DomEvent("vaadin-dialog-close-action")
+    public static class DialogCloseActionEvent extends ComponentEvent<Dialog> {
+        public DialogCloseActionEvent(Dialog source, boolean fromClient) {
+            super(source, fromClient);
+        }
+    }
+
+    /**
+     * Add a listener that informs when the user wants to close the dialog by
+     * clicking outside the dialog, or by pressing escape. Then you can decide
+     * whether to close or to keep opened the dialog. You need to disable the
+     * client-side closing feature by setting to false `closeOnOutsideClick` and
+     * `closeOnEsc` properties.
+     *
+     * @param listener
+     * @return registration for removal of listener
+     */
+    public Registration addDialogCloseActionListener(ComponentEventListener<DialogCloseActionEvent> listener) {
+        return addListener(DialogCloseActionEvent.class, listener);
     }
 
     /**
