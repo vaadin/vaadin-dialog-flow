@@ -42,7 +42,7 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
 
     private Element template;
     private Element container;
-    private boolean autoAddedToTheUi = false;
+    private boolean autoAddedToTheUi, onCloseConfigured;
 
     /**
      * Creates an empty dialog.
@@ -68,14 +68,6 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
                 autoAddedToTheUi = false;
             }
         });
-
-        UI.getCurrent().getPage().executeJavaScript(
-                "var f = function(e) {"
-              + "  e.preventDefault();"
-              + "  $0.dispatchEvent(new CustomEvent('vaadin-dialog-close-action'));"
-              + "};"
-              + "$0.$.overlay.addEventListener('vaadin-overlay-outside-click', f);"
-              + "$0.$.overlay.addEventListener('vaadin-overlay-escape-press', f);", getElement());
     }
 
     /**
@@ -224,6 +216,33 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
         setOpened(false);
     }
 
+    private void ensureAttached() {
+        UI ui = UI.getCurrent();
+        if (ui == null) {
+            throw new IllegalStateException("UI instance is not available. "
+                    + "It means that you are calling this method "
+                    + "out of a normal workflow where it's always implicitely set. "
+                    + "That may happen if you call the method from the custom thread without "
+                    + "'UI::access' or from tests without proper initialization.");
+        }
+        if (getElement().getNode().getParent() == null) {
+            ui.beforeClientResponse(ui, context -> {
+                ui.add(this);
+                autoAddedToTheUi = true;
+            });
+        }
+        if (!onCloseConfigured) {
+            ui.getPage().executeJavaScript(
+                "var f = function(e) {"
+              + "  e.preventDefault();"
+              + "  $0.dispatchEvent(new CustomEvent('vaadin-dialog-close-action'));"
+              + "};"
+              + "$0.$.overlay.addEventListener('vaadin-overlay-outside-click', f);"
+              + "$0.$.overlay.addEventListener('vaadin-overlay-escape-press', f);", getElement());
+            onCloseConfigured = true;
+        }
+    }
+
     /**
      * Opens or closes the dialog.
      * <p>
@@ -237,19 +256,8 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
      */
     @Override
     public void setOpened(boolean opened) {
-        UI ui = UI.getCurrent();
-        if (ui == null) {
-            throw new IllegalStateException("UI instance is not available. "
-                    + "It means that you are calling this method "
-                    + "out of a normal workflow where it's always implicitely set. "
-                    + "That may happen if you call the method from the custom thread without "
-                    + "'UI::access' or from tests without proper initialization.");
-        }
-        if (opened && getElement().getNode().getParent() == null) {
-            ui.beforeClientResponse(ui, context -> {
-                ui.add(this);
-                autoAddedToTheUi = true;
-            });
+        if (opened) {
+            ensureAttached();
         }
         super.setOpened(opened);
     }
