@@ -44,7 +44,6 @@ public class DialogView extends DemoView {
         // source-example-heading: Basic dialog
         Dialog dialog = new Dialog();
         dialog.add(new Label("Close me with the esc-key or an outside click"));
-        dialog.addDialogCloseActionListener(event -> dialog.close());
 
         button.addClickListener(event -> dialog.open());
         // end-source-example

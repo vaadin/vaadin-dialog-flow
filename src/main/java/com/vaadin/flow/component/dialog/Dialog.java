@@ -84,14 +84,13 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
     /**
      * Add a listener that informs when the user wants to close the dialog by
      * clicking outside the dialog, or by pressing escape. Then you can decide
-     * whether to close or to keep opened the dialog. You need to disable the
-     * client-side closing feature by setting to false `closeOnOutsideClick` and
-     * `closeOnEsc` properties.
+     * whether to close or to keep opened the dialog.
      *
      * @param listener
      * @return registration for removal of listener
      */
     public Registration addDialogCloseActionListener(ComponentEventListener<DialogCloseActionEvent> listener) {
+        ensureOnCloseConfigured();
         return addListener(DialogCloseActionEvent.class, listener);
     }
 
@@ -216,7 +215,7 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
         setOpened(false);
     }
 
-    private void ensureAttached() {
+    private UI getCurrentUI() {
         UI ui = UI.getCurrent();
         if (ui == null) {
             throw new IllegalStateException("UI instance is not available. "
@@ -225,17 +224,29 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
                     + "That may happen if you call the method from the custom thread without "
                     + "'UI::access' or from tests without proper initialization.");
         }
+        return ui;
+    }
+
+    private void ensureAttached() {
         if (getElement().getNode().getParent() == null) {
+            UI ui = getCurrentUI();
             ui.beforeClientResponse(ui, context -> {
                 ui.add(this);
                 autoAddedToTheUi = true;
             });
         }
+    }
+
+    private void ensureOnCloseConfigured() {
         if (!onCloseConfigured) {
-            ui.getPage().executeJavaScript(
+            ensureAttached();
+            getCurrentUI().getPage().executeJavaScript(
                 "var f = function(e) {"
-              + "  e.preventDefault();"
-              + "  $0.dispatchEvent(new CustomEvent('vaadin-dialog-close-action'));"
+              + "  if (e.type == 'vaadin-overlay-escape-press' && !$0.noCloseOnEsc ||"
+              + "      e.type == 'vaadin-overlay-outside-click' && !$0.noCloseOnOutsideClick) {"
+              + "    e.preventDefault();"
+              + "    $0.dispatchEvent(new CustomEvent('vaadin-dialog-close-action'));"
+              + "  }"
               + "};"
               + "$0.$.overlay.addEventListener('vaadin-overlay-outside-click', f);"
               + "$0.$.overlay.addEventListener('vaadin-overlay-escape-press', f);", getElement());

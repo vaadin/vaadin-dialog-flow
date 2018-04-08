@@ -80,7 +80,6 @@ public class DialogTestPage extends Div {
 
         Dialog dialog = new Dialog();
         dialog.setId("dialog-outside-ui");
-        dialog.addDialogCloseActionListener(e -> dialog.close());
         dialog.add(new Label("Hei! Moika! Moi!"), close);
 
         open.addClickListener(event -> dialog.open());
