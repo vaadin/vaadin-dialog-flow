@@ -38,11 +38,20 @@ public class DialogIT extends ComponentDemoTest {
 
         WebElement container = getOverlayContent()
                 .findElement(By.tagName("div"));
-        Assert.assertEquals("400px", container.getCssValue("width"));
+        Assert.assertEquals("500px", container.getCssValue("width"));
         Assert.assertEquals("150px", container.getCssValue("height"));
 
         new Actions(getDriver()).sendKeys(Keys.ESCAPE).perform();
         verifyDialogClosed();
+    }
+
+    @Test
+    public void openBasicDialog_minWidthUsed() {
+        findElement(By.id("basic-dialog-button")).click();
+
+        WebElement container = getOverlayContent()
+                .findElement(By.tagName("div"));
+        Assert.assertEquals("500px", container.getCssValue("width"));
     }
 
     @Test

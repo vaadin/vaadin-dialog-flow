@@ -9,3 +9,5 @@ target/
 #selenium
 error-screenshots
 reference-screenshots
+*.iml
+.idea
