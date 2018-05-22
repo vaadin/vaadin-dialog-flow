@@ -54,6 +54,7 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
         getElement().appendChild(template);
 
         container = new Element("div");
+        container.getStyle().set("min-width", "500px");
         getElement().appendChild(container);
 
         // Attach <flow-component-renderer>
@@ -85,6 +86,7 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
 
     @Override
     public void setWidth(String value) {
+        container.getStyle().remove("min-width");
         container.getStyle().set(ElementConstants.STYLE_WIDTH, value);
     }
 

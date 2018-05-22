@@ -46,6 +46,15 @@ public class DialogIT extends ComponentDemoTest {
     }
 
     @Test
+    public void openBasicDialog_minWidthUsed() {
+        findElement(By.id("confirmation-dialog-button")).click();
+
+        WebElement container = getOverlayContent()
+                .findElement(By.tagName("div"));
+        Assert.assertEquals("500px", container.getCssValue("width"));
+    }
+
+    @Test
     public void openAndCloseConfirmationDialog_buttonsRenderedWithClickListeners() {
         WebElement messageLabel = findElement(
                 By.id("confirmation-dialog-label"));
