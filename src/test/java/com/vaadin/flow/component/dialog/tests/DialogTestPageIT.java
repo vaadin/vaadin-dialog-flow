@@ -122,11 +122,29 @@ public class DialogTestPageIT extends AbstractComponentIT {
         return findElements(By.tagName(DIALOG_OVERLAY_TAG));
     }
 
-    public void openEmptyDialog_dialog_has_width() {
+    @Test
+    public void openEmptyDialog_dialogContentHasWidth() {
         findElement(By.id("open-button")).click();
 
+        waitForElementPresent(By.id("empty-dialog"));
+
         WebElement element = findElement(By.id("empty-dialog"));
-        Assert.assertTrue("Empty dialog didn't have a width",
-                Integer.parseInt(element.getCssValue("width")) > 100);
+        List<WebElement> content = findInShadowRoot(element, By.id("content"));
+        Assert.assertFalse("Couldn't find content for dialog",
+                content.isEmpty());
+
+        int contentPadding =
+                Integer.parseInt(content.get(0).getCssValue("padding-left"))
+                        + Integer
+                        .parseInt(content.get(0).getCssValue("padding-right"));
+
+        int contentMargin =
+                Integer.parseInt(content.get(0).getCssValue("margin-left"))
+                        + Integer
+                        .parseInt(content.get(0).getCssValue("margin-right"));
+
+        Assert.assertTrue("Empty dialog content didn't have a width",
+                Integer.parseInt(content.get(0).getCssValue("width"))
+                        > contentPadding + contentMargin);
     }
 }
