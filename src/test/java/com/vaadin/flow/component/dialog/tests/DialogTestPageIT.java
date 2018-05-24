@@ -75,7 +75,8 @@ public class DialogTestPageIT extends AbstractComponentIT {
 
         findElement(By.id("dialog-open")).click();
         checkDialogIsOpened();
-        executeScript("arguments[0].opened = false", findElement(By.id("dialog")));
+        executeScript("arguments[0].opened = false",
+                findElement(By.id("dialog")));
         Assert.assertEquals("The event came from client",
                 eventSourceMessage.getText());
     }
@@ -119,5 +120,13 @@ public class DialogTestPageIT extends AbstractComponentIT {
 
     private List<WebElement> getDialogs() {
         return findElements(By.tagName(DIALOG_OVERLAY_TAG));
+    }
+
+    public void openEmptyDialog_dialog_has_width() {
+        findElement(By.id("open-button")).click();
+
+        WebElement element = findElement(By.id("empty-dialog"));
+        Assert.assertTrue("Empty dialog didn't have a width",
+                Integer.parseInt(element.getCssValue("width")) > 100);
     }
 }
