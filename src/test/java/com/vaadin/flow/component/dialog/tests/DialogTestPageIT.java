@@ -27,6 +27,9 @@ import org.openqa.selenium.WebElement;
 import com.vaadin.flow.testutil.AbstractComponentIT;
 import com.vaadin.flow.testutil.TestPath;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+
 @TestPath("dialog-test")
 public class DialogTestPageIT extends AbstractComponentIT {
 
@@ -128,23 +131,50 @@ public class DialogTestPageIT extends AbstractComponentIT {
 
         waitForElementPresent(By.id("empty-dialog"));
 
-        WebElement element = findElement(By.id("empty-dialog"));
+        WebElement element = findElement(By.id("overlay"));
         List<WebElement> content = findInShadowRoot(element, By.id("content"));
+
         Assert.assertFalse("Couldn't find content for dialog",
                 content.isEmpty());
 
-        int contentPadding =
-                Integer.parseInt(content.get(0).getCssValue("padding-left"))
-                        + Integer
-                        .parseInt(content.get(0).getCssValue("padding-right"));
+        Long contentPadding =
+                getLongValue(content.get(0).getCssValue("padding-left"))
+                        + getLongValue(
+                        content.get(0).getCssValue("padding-right"));
 
-        int contentMargin =
-                Integer.parseInt(content.get(0).getCssValue("margin-left"))
-                        + Integer
-                        .parseInt(content.get(0).getCssValue("margin-right"));
+        Long contentMargin =
+                getLongValue(content.get(0).getCssValue("margin-left"))
+                        + getLongValue(
+                        content.get(0).getCssValue("margin-right"));
 
-        Assert.assertTrue("Empty dialog content didn't have a width",
-                Integer.parseInt(content.get(0).getCssValue("width"))
-                        > contentPadding + contentMargin);
+        Long endpoint = contentPadding + contentMargin;
+
+        assertThat("Content didn't have a with over the padding and margin",
+                getLongValue(content.get(0).getCssValue("width")),
+                greaterThan(endpoint));
+    }
+
+    /**
+     * Get the number for a css value with px suffix
+     *
+     * @param value
+     *         css value to get
+     * @return numeric value for given string with px suffix
+     */
+    private Long getLongValue(String value) {
+        if (value == null) {
+            return 0L;
+        }
+
+        StringBuilder number = new StringBuilder();
+        for (int i = 0; i < value.length(); i++) {
+            if (Character.isDigit(value.charAt(i))) {
+                number.append(value.charAt(i));
+            } else {
+                break;
+            }
+        }
+
+        return Long.parseLong(number.toString());
     }
 }
