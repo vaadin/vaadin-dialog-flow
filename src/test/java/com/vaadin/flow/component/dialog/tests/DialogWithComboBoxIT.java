@@ -28,7 +28,7 @@ import com.vaadin.flow.testutil.TestPath;
 public class DialogWithComboBoxIT extends AbstractComponentIT {
 
     @Test
-    public void overlayIsShown() {
+    public void openOverlayUsingKeybaord_overlayIsShown() {
         open();
 
         findElement(By.id("open-dialog")).click();
@@ -42,4 +42,21 @@ public class DialogWithComboBoxIT extends AbstractComponentIT {
         Assert.assertTrue(findElement(By.tagName("vaadin-combo-box-overlay"))
                 .isDisplayed());
     }
+
+    @Test
+    public void openOverlayUsingMouse_overlayIsShown() {
+        open();
+
+        findElement(By.id("open-dialog")).click();
+
+        WebElement combo = findElement(By.id("combo"));
+        getInShadowRoot(combo, By.id("toggleButton")).click();
+
+        WebElement info = findElement(By.id("info"));
+        waitUntil(driver -> info.getText().equals(Boolean.TRUE.toString()));
+
+        Assert.assertTrue(findElement(By.tagName("vaadin-combo-box-overlay"))
+                .isDisplayed());
+    }
+
 }
