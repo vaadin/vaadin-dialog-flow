@@ -141,6 +141,12 @@
             <artifactId>vaadin-combo-box-flow</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.webjars.bowergithub.polymerelements</groupId>
+                    <artifactId>iron-flex-layout</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
