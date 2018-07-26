@@ -143,7 +143,7 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
     public void add(Component... components) {
         Objects.requireNonNull(components, "Components should not be null");
         for (Component component : components) {
-            Objects.requireNonNull(component, "Components should not be null");
+            Objects.requireNonNull(component, "Component should not be null");
             container.appendChild(component.getElement());
         }
     }
@@ -152,7 +152,7 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
     public void remove(Component... components) {
         Objects.requireNonNull(components, "Components should not be null");
         for (Component component : components) {
-            Objects.requireNonNull(component, "Components should not be null");
+            Objects.requireNonNull(component, "Component should not be null");
             if (container.equals(component.getElement().getParent())) {
                 container.removeChild(component.getElement());
             } else {
@@ -167,6 +167,19 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
         container.removeAllChildren();
     }
 
+    /**
+     * Adds the given component into this dialog at the given index.
+     * <p>
+     * The element in the DOM will not be children of the
+     * {@code <vaadin-dialog>} element, but will be inserted into an overlay
+     * that is attached into the {@code <body>}.
+     *
+     * @param index
+     *            the index, where the component will be added.
+     *
+     * @param component
+     *            the component to add
+     */
     @Override
     public void addComponentAtIndex(int index, Component component) {
         Objects.requireNonNull(component, "Component should not be null");
@@ -181,6 +194,16 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
         container.insertChild(indexCheck, component.getElement());
     }
 
+    /**
+     * Adds the given component into this dialog at the first place.
+     * <p>
+     * The element in the DOM will not be children of the
+     * {@code <vaadin-dialog>} element, but will be inserted into an overlay
+     * that is attached into the {@code <body>}.
+     * 
+     * @param component
+     *            the component to add
+     */
     @Override
     public void addComponentAsFirst(Component component) {
         addComponentAtIndex(0, component);
