@@ -143,7 +143,8 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
     public void add(Component... components) {
         Objects.requireNonNull(components, "Components should not be null");
         for (Component component : components) {
-            Objects.requireNonNull(component, "Component should not be null");
+            Objects.requireNonNull(component,
+                    "Component to remove cannot be null");
             container.appendChild(component.getElement());
         }
     }
@@ -152,7 +153,8 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
     public void remove(Component... components) {
         Objects.requireNonNull(components, "Components should not be null");
         for (Component component : components) {
-            Objects.requireNonNull(component, "Component should not be null");
+            Objects.requireNonNull(component,
+                    "Component to remove cannot be null");
             if (container.equals(component.getElement().getParent())) {
                 container.removeChild(component.getElement());
             } else {
@@ -170,9 +172,9 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
     /**
      * Adds the given component into this dialog at the given index.
      * <p>
-     * The element in the DOM will not be children of the
-     * {@code <vaadin-dialog>} element, but will be inserted into an overlay
-     * that is attached into the {@code <body>}.
+     * The element in the DOM will not be child of the {@code <vaadin-dialog>}
+     * element, but will be inserted into an overlay that is attached into the
+     * {@code <body>}.
      *
      * @param index
      *            the index, where the component will be added.
