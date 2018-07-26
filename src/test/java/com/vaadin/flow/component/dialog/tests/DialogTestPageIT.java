@@ -15,8 +15,6 @@
  */
 package com.vaadin.flow.component.dialog.tests;
 
-import javax.annotation.concurrent.NotThreadSafe;
-
 import java.util.List;
 
 import org.hamcrest.CoreMatchers;
@@ -35,7 +33,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 
 @TestPath("dialog-test")
-@NotThreadSafe
 public class DialogTestPageIT extends AbstractComponentIT {
 
     static final String DIALOG_OVERLAY_TAG = "vaadin-dialog-overlay";
