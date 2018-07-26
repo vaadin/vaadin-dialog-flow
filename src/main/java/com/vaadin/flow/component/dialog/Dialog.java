@@ -144,7 +144,7 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
         Objects.requireNonNull(components, "Components should not be null");
         for (Component component : components) {
             Objects.requireNonNull(component,
-                    "Component to remove cannot be null");
+                    "Component to add cannot be null");
             container.appendChild(component.getElement());
         }
     }
