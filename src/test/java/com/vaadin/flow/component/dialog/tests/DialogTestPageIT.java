@@ -15,6 +15,8 @@
  */
 package com.vaadin.flow.component.dialog.tests;
 
+import javax.annotation.concurrent.NotThreadSafe;
+
 import java.util.List;
 
 import org.hamcrest.CoreMatchers;
@@ -22,7 +24,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
 import com.vaadin.flow.testutil.AbstractComponentIT;
 import com.vaadin.flow.testutil.TestPath;
@@ -31,6 +35,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 
 @TestPath("dialog-test")
+@NotThreadSafe
 public class DialogTestPageIT extends AbstractComponentIT {
 
     static final String DIALOG_OVERLAY_TAG = "vaadin-dialog-overlay";
@@ -105,6 +110,62 @@ public class DialogTestPageIT extends AbstractComponentIT {
         close.click();
         checkDialogIsClosed();
         waitForElementNotPresent(By.id("dialog-outside-ui"));
+    }
+
+    @Test
+    public void openDialogAddComponentAtFirst() {
+        verifyInitialDialog(3);
+        findElement(By.id("button-to-first")).click();
+        assertButtonNumberInDialog(4);
+        assertButtonText(0);
+    }
+
+    @Test
+    public void openDialogAddComponentAtIndex() {
+        verifyInitialDialog(3);
+        findElement(By.id("button-to-second")).click();
+        assertButtonNumberInDialog(4);
+        assertButtonText(1);
+    }
+
+    @Test
+    public void openDialogAddComponentOverIndex() {
+        verifyInitialDialog(3);
+        findElement(By.id("button-over-index")).click();
+        assertButtonNumberInDialog(4);
+        assertButtonText(3);
+    }
+
+    @Test
+    public void openDialogAddComponentNegativeIndex() {
+        verifyInitialDialog(3);
+        findElement(By.id("button-negative-index")).click();
+        assertButtonNumberInDialog(4);
+        assertButtonText(0);
+    }
+
+    private void assertButtonText(int index) {
+        Assert.assertEquals("Button Text is not correct","Added Button",
+                findElements(By.tagName(DIALOG_OVERLAY_TAG)).get(0)
+                        .findElements(By.tagName("button")).get(index)
+                        .getText());
+    }
+
+    private void verifyInitialDialog(int initialNumber) {
+        waitForElementNotPresent(By.id("dialog-add-component-at-index"));
+        findElement(By.id("open-dialog-add-component-at-index")).click();
+        waitForElementPresent(By.id("dialog-add-component-at-index"));
+        assertButtonNumberInDialog(initialNumber);
+        new Actions(getDriver()).sendKeys(Keys.ESCAPE).perform();
+        waitForElementNotPresent(By.id("dialog-add-component-at-index"));
+    }
+    
+    private void assertButtonNumberInDialog(int expectedButtonNumber) {
+        Assert.assertEquals(
+                "Number of buttons in the dialog overlay is not correct.",
+                expectedButtonNumber,
+                findElement(By.tagName(DIALOG_OVERLAY_TAG))
+                        .findElements(By.tagName("button")).size());
     }
 
     private void checkDialogIsClosed() {

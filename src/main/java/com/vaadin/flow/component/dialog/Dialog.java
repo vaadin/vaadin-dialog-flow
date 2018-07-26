@@ -15,6 +15,7 @@
  */
 package com.vaadin.flow.component.dialog;
 
+import java.util.Objects;
 import java.util.stream.Stream;
 import java.util.stream.Stream.Builder;
 
@@ -140,17 +141,18 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
      */
     @Override
     public void add(Component... components) {
-        assert components != null;
+        Objects.requireNonNull(components, "Components should not be null");
         for (Component component : components) {
-            assert component != null;
+            Objects.requireNonNull(component, "Components should not be null");
             container.appendChild(component.getElement());
         }
     }
 
     @Override
     public void remove(Component... components) {
+        Objects.requireNonNull(components, "Components should not be null");
         for (Component component : components) {
-            assert component != null;
+            Objects.requireNonNull(component, "Components should not be null");
             if (container.equals(component.getElement().getParent())) {
                 container.removeChild(component.getElement());
             } else {
@@ -163,6 +165,25 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
     @Override
     public void removeAll() {
         container.removeAllChildren();
+    }
+
+    @Override
+    public void addComponentAtIndex(int index, Component component) {
+        Objects.requireNonNull(component, "Component should not be null");
+        int indexCheck;
+        if (index < 0) {
+            indexCheck = 0;
+        } else if (index > container.getChildCount()) {
+            indexCheck = container.getChildCount();
+        } else {
+            indexCheck = index;
+        }
+        container.insertChild(indexCheck, component.getElement());
+    }
+
+    @Override
+    public void addComponentAsFirst(Component component) {
+        addComponentAtIndex(0, component);
     }
 
     /**
