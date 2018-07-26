@@ -195,21 +195,6 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
     }
 
     /**
-     * Adds the given component into this dialog at the first place.
-     * <p>
-     * The element in the DOM will not be children of the
-     * {@code <vaadin-dialog>} element, but will be inserted into an overlay
-     * that is attached into the {@code <body>}.
-     * 
-     * @param component
-     *            the component to add
-     */
-    @Override
-    public void addComponentAsFirst(Component component) {
-        addComponentAtIndex(0, component);
-    }
-
-    /**
      * Gets whether this dialog can be closed by hitting the esc-key or not.
      * <p>
      * By default, the dialog is closable with esc.
