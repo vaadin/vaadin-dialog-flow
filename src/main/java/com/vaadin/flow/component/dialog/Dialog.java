@@ -129,17 +129,24 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
         if (isOpened()) {
             ensureOnCloseConfigured();
         }
-        getElement().addPropertyChangeListener("opened", event -> {
-            if (isOpened()) {
-                ensureOnCloseConfigured();
-            } else {
-                onCloseConfigured--;
-            }
-        });
+        Registration openedRegistration = getElement()
+                .addPropertyChangeListener("opened", event -> {
+                    if (isOpened()) {
+                        ensureOnCloseConfigured();
+                    } else {
+                        onCloseConfigured = 0;
+                    }
+                });
+
         Registration registration = addListener(DialogCloseActionEvent.class,
                 listener);
         return () -> {
-            onCloseConfigured--;
+            if (isOpened()) {
+                // the count is decremented if the dialog is closed. So we
+                // should decrement is explicitly if listener is deregistered
+                onCloseConfigured--;
+            }
+            openedRegistration.remove();
             registration.remove();
         };
     }
@@ -319,23 +326,29 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
 
     private void ensureOnCloseConfigured() {
         if (onCloseConfigured == 0) {
-            getElement().getNode().runWhenAttached(
-                    ui -> ui.beforeClientResponse(this, context -> ui.getPage()
-                            .executeJavaScript("var f = function(e) {"
-                                    + "  if (e.type == 'vaadin-overlay-escape-press' && !$0.noCloseOnEsc ||"
-                                    + "      e.type == 'vaadin-overlay-outside-click' && !$0.noCloseOnOutsideClick) {"
-                                    + "    e.preventDefault();"
-                                    + "    $0.dispatchEvent(new CustomEvent('vaadin-dialog-close-action'));"
-                                    + "  }" + "};"
-                                    + "$0.$.overlay.addEventListener('vaadin-overlay-outside-click', f);"
-                                    + "$0.$.overlay.addEventListener('vaadin-overlay-escape-press', f);"
-                                    + "$0.addEventListener('opened-changed', function(){"
-                                    + " if (!$0.opened) {"
-                                    + " $0.$.overlay.removeEventListener('vaadin-overlay-outside-click',f);"
-                                    + "$0.$.overlay.removeEventListener('vaadin-overlay-escape-press', f);"
-                                    + "} });", getElement())));
+            getElement().getNode()
+                    .runWhenAttached(ui -> ui.beforeClientResponse(this,
+                            context -> doEnsureOnCloseConfigured(ui)));
         }
         onCloseConfigured++;
+    }
+
+    private void doEnsureOnCloseConfigured(UI ui) {
+        if (onCloseConfigured > 0) {
+            ui.getPage().executeJavaScript("var f = function(e) {"
+                    + "  if (e.type == 'vaadin-overlay-escape-press' && !$0.noCloseOnEsc ||"
+                    + "      e.type == 'vaadin-overlay-outside-click' && !$0.noCloseOnOutsideClick) {"
+                    + "    e.preventDefault();"
+                    + "    $0.dispatchEvent(new CustomEvent('vaadin-dialog-close-action'));"
+                    + "  }" + "};"
+                    + "$0.$.overlay.addEventListener('vaadin-overlay-outside-click', f);"
+                    + "$0.$.overlay.addEventListener('vaadin-overlay-escape-press', f);"
+                    + "$0.addEventListener('opened-changed', function(){"
+                    + " if (!$0.opened) {"
+                    + " $0.$.overlay.removeEventListener('vaadin-overlay-outside-click',f);"
+                    + "$0.$.overlay.removeEventListener('vaadin-overlay-escape-press', f);"
+                    + "} });", getElement());
+        }
     }
 
     /**

@@ -27,9 +27,12 @@ public class CloseListenerReopenDialogPage extends Div {
 
     public CloseListenerReopenDialogPage() {
         Dialog dialog = new Dialog();
-        dialog.add(new NativeButton("Close dialog", event -> dialog.close()));
+        NativeButton close = new NativeButton("Close dialog",
+                event -> dialog.close());
+        close.setId("close");
+        dialog.add(close);
         Registration registration = dialog.addDialogCloseActionListener(
-                event -> add(new Text("Dialog closed")));
+                event -> addInfo("main", "Main dialog is closed"));
         NativeButton open = new NativeButton("Open dialog",
                 event -> dialog.open());
         open.setId("open");
@@ -39,5 +42,25 @@ public class CloseListenerReopenDialogPage extends Div {
                 event -> registration.remove());
         button.setId("remove");
         add(button);
+
+        Dialog subDialog = new Dialog();
+        subDialog.add(new Text("Subdialog"));
+        dialog.add(subDialog);
+        subDialog.addDialogCloseActionListener(event -> {
+            addInfo("sub", "Subdialog is closed");
+            subDialog.close();
+        });
+
+        NativeButton openSubDialog = new NativeButton("Open subdialog",
+                event -> subDialog.open());
+        openSubDialog.setId("open-sub");
+        dialog.add(openSubDialog);
+    }
+
+    private void addInfo(String style, String text) {
+        Div div = new Div();
+        div.setText(text);
+        div.addClassName(style);
+        add(div);
     }
 }
