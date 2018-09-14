@@ -28,6 +28,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.vaadin.flow.testutil.AbstractComponentIT;
 import com.vaadin.flow.testutil.TestPath;
@@ -127,8 +128,8 @@ public class DialogTestPageIT extends AbstractComponentIT {
 
     private void assertButtonText(int index) {
         Assert.assertEquals("Button Text is not correct", "Added Button",
-                findElements(By.tagName(DIALOG_OVERLAY_TAG)).get(0)
-                        .findElements(By.tagName("button")).get(index)
+                findElements(By.cssSelector(DIALOG_OVERLAY_TAG)).get(0)
+                        .findElements(By.cssSelector("button")).get(index)
                         .getText());
     }
 
@@ -142,11 +143,8 @@ public class DialogTestPageIT extends AbstractComponentIT {
     }
 
     private void assertButtonNumberInDialog(int expectedButtonNumber) {
-        Assert.assertEquals(
-                "Number of buttons in the dialog overlay is not correct.",
-                expectedButtonNumber,
-                findElement(By.tagName(DIALOG_OVERLAY_TAG))
-                        .findElements(By.tagName("button")).size());
+        waitUntil(driver -> ExpectedConditions
+                .numberOfElementsToBe(By.cssSelector(DIALOG_OVERLAY_TAG), 4));
     }
 
     private void checkDialogIsClosed() {
