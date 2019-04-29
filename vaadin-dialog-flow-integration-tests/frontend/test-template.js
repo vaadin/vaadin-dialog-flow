@@ -12,4 +12,4 @@ class TemplateButton extends PolymerElement {
       return 'test-template'
   }
 }
-customElements.define(TestTemplate.is, TestTemplate);
+customElements.define(TemplateButton.is, TemplateButton);
