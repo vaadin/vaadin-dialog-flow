@@ -10,9 +10,9 @@
     </parent>
 
     <groupId>com.vaadin</groupId>
-    <artifactId>vaadin-dialog-flow-integration-tests</artifactId>
+    <artifactId>vaadin-dialog-flow-integration-tests-bower-mode</artifactId>
     <packaging>war</packaging>
-    <name>Vaadin Dialog Integration Tests</name>
+    <name>Vaadin Dialog Integration Tests in Bower Mode</name>
 
     <dependencies>
         <!-- Flow -->
@@ -31,10 +31,6 @@
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>flow-data</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-server-production-mode</artifactId>
         </dependency>
 
         <!-- Logger -->
@@ -64,8 +60,7 @@
         <!-- Other components used in tests and demos -->
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-combo-box-flow</artifactId>
-            <version>2.0-SNAPSHOT</version>
+            <artifactId>vaadin-lumo-theme</artifactId>
         </dependency>
 
         <!--Test scoped -->
@@ -79,20 +74,31 @@
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-all</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <!-- run vaadin frontend verify and build goals -->
             <plugin>
-                <groupId>com.vaadin</groupId>
-                <artifactId>flow-maven-plugin</artifactId>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>set-system-properties</goal>
+                        </goals>
+                        <configuration>
+                            <properties>
+                                <property>
+                                    <name>vaadin.bowerMode</name>
+                                    <value>true</value>
+                                </property>
+                            </properties>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
+
             <!-- start jetty before ITs -->
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
@@ -102,14 +108,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-            </plugin>
-            <!-- Deploy configuration -->
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <configuration>
-                    <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
-                </configuration>
             </plugin>
         </plugins>
     </build>
