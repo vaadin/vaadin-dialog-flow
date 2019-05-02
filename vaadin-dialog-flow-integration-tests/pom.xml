@@ -18,19 +18,11 @@
         <!-- Flow -->
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>flow-server</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
             <artifactId>flow-client</artifactId>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>flow-html-components</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-data</artifactId>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>

@@ -13,7 +13,7 @@
     <artifactId>vaadin-dialog-flow</artifactId>
     <packaging>jar</packaging>
 
-    <name>Vaadin Dialog</name>
+    <name>Vaadin Dialog Flow</name>
 
     <dependencies>
          <dependency>

@@ -18,19 +18,11 @@
         <!-- Flow -->
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>flow-server</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
             <artifactId>flow-client</artifactId>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>flow-html-components</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-data</artifactId>
         </dependency>
 
         <!-- Logger -->
@@ -60,7 +52,8 @@
         <!-- Other components used in tests and demos -->
         <dependency>
             <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-lumo-theme</artifactId>
+            <artifactId>vaadin-combo-box-flow</artifactId>
+            <version>2.0-SNAPSHOT</version>
         </dependency>
 
         <!--Test scoped -->
@@ -74,31 +67,35 @@
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>properties-maven-plugin</artifactId>
-                <version>1.0.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>set-system-properties</goal>
-                        </goals>
-                        <configuration>
-                            <properties>
-                                <property>
-                                    <name>vaadin.bowerMode</name>
-                                    <value>true</value>
-                                </property>
-                            </properties>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
+                 <groupId>org.codehaus.mojo</groupId>
+                 <artifactId>properties-maven-plugin</artifactId>
+                 <version>1.0.0</version>
+                 <executions>
+                     <execution>
+                         <goals>
+                             <goal>set-system-properties</goal>
+                         </goals>
+                         <configuration>
+                             <properties>
+                                 <property>
+                                     <name>vaadin.bowerMode</name>
+                                     <value>true</value>
+                                 </property>
+                             </properties>
+                         </configuration>
+                     </execution>
+                 </executions>
+             </plugin>
             <!-- start jetty before ITs -->
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
