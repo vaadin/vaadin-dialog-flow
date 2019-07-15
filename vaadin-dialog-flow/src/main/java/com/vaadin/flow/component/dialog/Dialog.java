@@ -316,13 +316,13 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
     }
 
     private void ensureAttached() {
-        if (getElement().getNode().getParent() == null) {
-            UI ui = getCurrentUI();
-            ui.beforeClientResponse(ui, context -> {
+        UI ui = getCurrentUI();
+        ui.beforeClientResponse(ui, context -> {
+            if (getElement().getNode().getParent() == null) {
                 ui.add(this);
                 autoAddedToTheUi = true;
-            });
-        }
+            }
+        });
     }
 
     private void ensureOnCloseConfigured() {
