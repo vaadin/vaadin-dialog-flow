@@ -68,7 +68,7 @@ public class DialogView extends DemoView {
     }
 
     private void addConfirmationDialog() {
-        Button button = new Button(BUTTON_CAPTION);
+        NativeButton button = new NativeButton(BUTTON_CAPTION);
 
         // begin-source-example
         // source-example-heading: Confirmation dialog
