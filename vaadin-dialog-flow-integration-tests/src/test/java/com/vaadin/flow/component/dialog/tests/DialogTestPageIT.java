@@ -15,11 +15,8 @@
  */
 package com.vaadin.flow.component.dialog.tests;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
-
-import java.util.List;
-
+import com.vaadin.flow.testutil.AbstractComponentIT;
+import com.vaadin.flow.testutil.TestPath;
 import org.hamcrest.CoreMatchers;
 import org.junit.Assert;
 import org.junit.Before;
@@ -30,8 +27,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import com.vaadin.flow.testutil.AbstractComponentIT;
-import com.vaadin.flow.testutil.TestPath;
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
 
 @TestPath("dialog-test")
 public class DialogTestPageIT extends AbstractComponentIT {
@@ -205,6 +204,26 @@ public class DialogTestPageIT extends AbstractComponentIT {
                 greaterThan(endpoint));
     }
 
+    @Test
+    public void verifyDialogFullSize() {
+        findElement(By.id("div-in-dialog-button")).click();
+        WebElement overlay = getInShadowRoot(getOverlayContent(),
+                By.id("overlay"));
+        Assert.assertTrue(
+                overlay.getAttribute("style").contains("width: 100%;"));
+        Assert.assertTrue(
+                overlay.getAttribute("style").contains("height: 100%;"));
+
+        WebElement content = overlay.findElement(By.id("content"));
+
+        Assert.assertTrue(
+                content.getAttribute("style").contains("width: 100%;"));
+        Assert.assertTrue(
+                content.getAttribute("style").contains("height: 100%;"));
+        Assert.assertTrue(content.getAttribute("style")
+                .contains("box-sizing: border-box;"));
+    }
+
     /**
      * Get the number for a css value with px suffix
      *
@@ -227,5 +246,9 @@ public class DialogTestPageIT extends AbstractComponentIT {
         }
 
         return Long.parseLong(number.toString());
+    }
+
+    private WebElement getOverlayContent() {
+        return findElement(By.tagName(DIALOG_OVERLAY_TAG));
     }
 }

@@ -40,6 +40,7 @@ public class DialogTestPage extends Div {
         createDialogAddingToTheUiAfterOpening();
         createEmptyDialog();
         createDialogAndAddComponentAtIndex();
+        createGridInDialog();
     }
 
     private void createDialogWithAddOpenedChangeListener() {
@@ -154,4 +155,18 @@ public class DialogTestPage extends Div {
         return button;
     }
 
+    private void createGridInDialog() {
+        Div div = new Div();
+
+        Dialog dialog = new Dialog(div);
+        dialog.setId("div-in-dialog");
+
+        NativeButton button = new NativeButton("open Dialog",
+                event -> dialog.open());
+        button.setId("div-in-dialog-button");
+
+        dialog.setSizeFull();
+        div.setSizeFull();
+        add(button);
+    }
 }
