@@ -40,7 +40,7 @@ public class DialogTestPage extends Div {
         createDialogAddingToTheUiAfterOpening();
         createEmptyDialog();
         createDialogAndAddComponentAtIndex();
-        createGridInDialog();
+        createDivInDialog();
     }
 
     private void createDialogWithAddOpenedChangeListener() {
@@ -155,7 +155,7 @@ public class DialogTestPage extends Div {
         return button;
     }
 
-    private void createGridInDialog() {
+    private void createDivInDialog() {
         Div div = new Div();
 
         Dialog dialog = new Dialog(div);
