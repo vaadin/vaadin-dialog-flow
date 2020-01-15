@@ -60,8 +60,8 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
         getElement().appendChild(template);
 
         container = new Element("div");
-        container.getStyle().set("width", "100%");
-        container.getStyle().set("height", "100%");
+        container.getStyle().set(ElementConstants.STYLE_WIDTH, "100%");
+        container.getStyle().set(ElementConstants.STYLE_HEIGHT, "100%");
 
         getElement().appendVirtualChild(container);
 
@@ -438,15 +438,10 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
                 "<flow-component-renderer appid=\"%s\" nodeid=\"%s\"></flow-component-renderer>",
                 appId, nodeId);
         template.setProperty("innerHTML", renderer);
+
         getElement().executeJs("this.$.overlay.$.overlay.style.height=$0",
                 height);
-        getElement().executeJs("this.$.overlay.$.content.style.height=$0",
-                "100%");
         getElement().executeJs("this.$.overlay.$.overlay.style.width=$0",
                 width);
-        getElement().executeJs("this.$.overlay.$.content.style.width=$0",
-                "100%");
-        getElement().executeJs("this.$.overlay.$.content.style.boxSizing=$0",
-                "border-box");
     }
 }

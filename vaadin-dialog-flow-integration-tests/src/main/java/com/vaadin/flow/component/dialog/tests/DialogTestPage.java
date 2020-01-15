@@ -157,13 +157,13 @@ public class DialogTestPage extends Div {
 
     private void createDivInDialog() {
         Div div = new Div();
+        div.setId("div-in-dialog");
 
         Dialog dialog = new Dialog(div);
-        dialog.setId("div-in-dialog");
 
         NativeButton button = new NativeButton("open Dialog",
                 event -> dialog.open());
-        button.setId("div-in-dialog-button");
+        button.setId("button-for-dialog-with-div");
 
         dialog.setSizeFull();
         div.setSizeFull();

@@ -15,6 +15,7 @@
  */
 package com.vaadin.flow.component.dialog.tests;
 
+import com.vaadin.flow.dom.ElementConstants;
 import com.vaadin.flow.testutil.AbstractComponentIT;
 import com.vaadin.flow.testutil.TestPath;
 import org.hamcrest.CoreMatchers;
@@ -206,7 +207,7 @@ public class DialogTestPageIT extends AbstractComponentIT {
 
     @Test
     public void verifyDialogFullSize() {
-        findElement(By.id("div-in-dialog-button")).click();
+        findElement(By.id("button-for-dialog-with-div")).click();
         WebElement overlay = getInShadowRoot(getOverlayContent(),
                 By.id("overlay"));
         Assert.assertTrue(
@@ -214,14 +215,22 @@ public class DialogTestPageIT extends AbstractComponentIT {
         Assert.assertTrue(
                 overlay.getAttribute("style").contains("height: 100%;"));
 
+        WebElement div = findElement(By.id("div-in-dialog"));
         WebElement content = overlay.findElement(By.id("content"));
 
-        Assert.assertTrue(
-                content.getAttribute("style").contains("width: 100%;"));
-        Assert.assertTrue(
-                content.getAttribute("style").contains("height: 100%;"));
-        Assert.assertTrue(content.getAttribute("style")
-                .contains("box-sizing: border-box;"));
+        String overLayWidth = overlay.getCssValue(ElementConstants.STYLE_WIDTH);
+        int overlayValue = Integer
+                .valueOf(overLayWidth.substring(0, overLayWidth.length() - 2));
+
+        String paddingWidth = content.getCssValue("padding");
+        int paddingValue = Integer
+                .valueOf(paddingWidth.substring(0, paddingWidth.length() - 2));
+
+        String divWidth = div.getCssValue(ElementConstants.STYLE_WIDTH);
+        int divValue = Integer
+                .valueOf(divWidth.substring(0, divWidth.length() - 2));
+
+        Assert.assertEquals(overlayValue - paddingValue * 2, divValue);
     }
 
     /**
