@@ -219,7 +219,7 @@ public class DialogTestPageIT extends AbstractComponentIT {
         WebElement content = overlay.findElement(By.id("content"));
 
         String overLayWidth = overlay.getCssValue(ElementConstants.STYLE_WIDTH);
-        int overlayValue = Integer
+        int overlayWidthValue = Integer
                 .valueOf(overLayWidth.substring(0, overLayWidth.length() - 2));
 
         String paddingWidth = content.getCssValue("padding");
@@ -227,10 +227,23 @@ public class DialogTestPageIT extends AbstractComponentIT {
                 .valueOf(paddingWidth.substring(0, paddingWidth.length() - 2));
 
         String divWidth = div.getCssValue(ElementConstants.STYLE_WIDTH);
-        int divValue = Integer
+        int divWidthValue = Integer
                 .valueOf(divWidth.substring(0, divWidth.length() - 2));
 
-        Assert.assertEquals(overlayValue - paddingValue * 2, divValue);
+        Assert.assertEquals(overlayWidthValue - paddingValue * 2,
+                divWidthValue);
+
+        String overLayHeight = overlay
+                .getCssValue(ElementConstants.STYLE_HEIGHT);
+        int overLayHeightValue = Integer.valueOf(
+                overLayHeight.substring(0, overLayHeight.length() - 2));
+
+        String divHeight = div.getCssValue(ElementConstants.STYLE_HEIGHT);
+        int divHeightValue = Integer
+                .valueOf(divHeight.substring(0, divHeight.length() - 2));
+
+        Assert.assertEquals(overLayHeightValue - paddingValue * 2,
+                divHeightValue);
     }
 
     /**
