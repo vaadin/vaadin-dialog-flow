@@ -26,6 +26,7 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.DomEvent;
+import com.vaadin.flow.component.EventData;
 import com.vaadin.flow.component.HasComponents;
 import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.UI;
@@ -80,6 +81,11 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
                 autoAddedToTheUi = false;
             }
         });
+
+        ComponentUtil.addListener(this, DialogResizeEvent.class, event -> {
+            setWidth(event.getWidth());
+            setHeight(event.getHeight());
+        });
     }
 
     /**
@@ -90,6 +96,30 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
     public static class DialogCloseActionEvent extends ComponentEvent<Dialog> {
         public DialogCloseActionEvent(Dialog source, boolean fromClient) {
             super(source, fromClient);
+        }
+    }
+
+    @DomEvent("resize")
+    public static class DialogResizeEvent extends ComponentEvent<Dialog> {
+
+        private final String width;
+        private final String height;
+        public DialogResizeEvent(
+            Dialog source,
+            boolean fromClient,
+            @EventData("event.detail.width") String width,
+            @EventData("event.detail.height") String height) {
+            super(source, fromClient);
+            this.width = width;
+            this.height = height;
+        }
+
+        public String getWidth() {
+            return width;
+        }
+
+        public String getHeight() {
+            return height;
         }
     }
 
@@ -157,6 +187,10 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
             openedRegistration.remove();
             registration.remove();
         };
+    }
+
+    public Registration addResizeListener(ComponentEventListener<DialogResizeEvent> listener) {
+        return addListener(DialogResizeEvent.class, listener);
     }
 
     /**
