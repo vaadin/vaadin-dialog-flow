@@ -82,7 +82,7 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
             }
         });
 
-        ComponentUtil.addListener(this, DialogResizeEvent.class, event -> {
+        addListener(DialogResizeEvent.class, event -> {
             setWidth(event.getWidth());
             setHeight(event.getHeight());
         });
@@ -102,7 +102,8 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
     /**
      * `resize` event is sent when the user finishes resizing the overlay.
      */
-    @DomEvent("resize") public static class DialogResizeEvent
+    @DomEvent("resize") 
+    public static class DialogResizeEvent
             extends ComponentEvent<Dialog> {
 
         private final String width;
