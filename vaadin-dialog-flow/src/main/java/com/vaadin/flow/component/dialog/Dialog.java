@@ -99,16 +99,18 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
         }
     }
 
-    @DomEvent("resize")
-    public static class DialogResizeEvent extends ComponentEvent<Dialog> {
+    /**
+     * `resize` event is sent when the user finishes resizing the overlay.
+     */
+    @DomEvent("resize") public static class DialogResizeEvent
+            extends ComponentEvent<Dialog> {
 
         private final String width;
         private final String height;
-        public DialogResizeEvent(
-            Dialog source,
-            boolean fromClient,
-            @EventData("event.detail.width") String width,
-            @EventData("event.detail.height") String height) {
+
+        public DialogResizeEvent(Dialog source, boolean fromClient,
+                @EventData("event.detail.width") String width,
+                @EventData("event.detail.height") String height) {
             super(source, fromClient);
             this.width = width;
             this.height = height;
@@ -189,7 +191,19 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
         };
     }
 
-    public Registration addResizeListener(ComponentEventListener<DialogResizeEvent> listener) {
+    /**
+     * Adds a listener that is called after user finishes resizing the overlay.
+     * It is called only if resizing is enabled (see
+     * {@link Dialog#setResizable(boolean)}).
+     * <p>
+     * Note: By default, the component will sync the width/height values after
+     * every resizing.
+     *
+     * @param listener
+     * @return registration for removal of listener
+     */
+    public Registration addResizeListener(
+            ComponentEventListener<DialogResizeEvent> listener) {
         return addListener(DialogResizeEvent.class, listener);
     }
 
