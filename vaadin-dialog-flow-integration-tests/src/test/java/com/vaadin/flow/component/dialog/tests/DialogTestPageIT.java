@@ -288,13 +288,19 @@ public class DialogTestPageIT extends AbstractComponentIT {
     @Test
     public void resizableDialogListenerIsCalled() {
         findElement(By.id("dialog-resizable-open-button")).click();
+        WebElement message = findElement(By.id("dialog-resizable-message"));
+
+        Assert.assertEquals(
+                "Initial size with width (200px) and height (200px)",
+                message.getText());
 
         WebElement overlayContent = getOverlayContent();
 
         resizeDialog(overlayContent);
 
-        WebElement message = findElement(By.id("dialog-resizable-message"));
-        Assert.assertEquals(message.getText(), "Rezise listener was called");
+        Assert.assertEquals(
+                "Rezise listener called with width (250px) and height (250px)",
+                message.getText());
     }
 
     private void resizeDialog(WebElement overlayContent) {
