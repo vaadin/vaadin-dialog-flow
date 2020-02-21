@@ -117,10 +117,20 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
             this.height = height;
         }
 
+        /**
+         * Gets the width of the overlay after resize is done
+         *
+         * @return the width in pixels of the overlay
+         */
         public String getWidth() {
             return width;
         }
 
+        /**
+         * Gets the height of the overlay after resize is done
+         *
+         * @return the height in pixels of the overlay
+         */
         public String getHeight() {
             return height;
         }
