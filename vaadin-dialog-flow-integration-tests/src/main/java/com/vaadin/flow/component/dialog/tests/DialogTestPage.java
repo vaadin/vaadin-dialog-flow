@@ -42,6 +42,7 @@ public class DialogTestPage extends Div {
         createDialogAndAddComponentAtIndex();
         createDivInDialog();
         createResizableDialog();
+        changeDialogDimensions();
     }
 
     private void createDialogWithAddOpenedChangeListener() {
@@ -199,5 +200,47 @@ public class DialogTestPage extends Div {
         openDialog.setId("dialog-resizable-open-button");
 
         add(openDialog, message);
+    }
+
+    private void changeDialogDimensions() {
+        Dialog selfAttachedDialog = new Dialog();
+        selfAttachedDialog.setId("dimension-dialog-self-attached");
+        selfAttachedDialog.setModal(false);
+        selfAttachedDialog.add(new NativeButton("close", e -> selfAttachedDialog
+                .close()));
+
+        NativeButton openSelfAttachedButton = new NativeButton(
+                "open self attached dialog", e -> selfAttachedDialog.open());
+        openSelfAttachedButton.setId("dimension-open-self-attached-button");
+
+        Dialog attachedDialog = new Dialog();
+        attachedDialog.setId("dimension-dialog-attached");
+        attachedDialog.setModal(false);
+        attachedDialog
+                .add(new NativeButton("close", e -> attachedDialog.close()));
+
+        NativeButton openAttachedButton = new NativeButton(
+                "open attached dialog", e -> attachedDialog.open());
+        openAttachedButton.setId("dimension-open-attached-button");
+
+        NativeButton changeDimensionSelfAttachedButton = new NativeButton(
+                "change size self attached dialog");
+        changeDimensionSelfAttachedButton
+                .setId("dimension-change-size-self-attached");
+        changeDimensionSelfAttachedButton.addClickListener(e -> {
+            selfAttachedDialog.setWidth("500px");
+            selfAttachedDialog.setHeight("500px");
+        });
+
+        NativeButton changeDimensionAttachedButton = new NativeButton(
+                "change size self attached dialog");
+        changeDimensionAttachedButton.setId("dimension-change-size-attached");
+        changeDimensionAttachedButton.addClickListener(e -> {
+            attachedDialog.setWidth("500px");
+            attachedDialog.setHeight("500px");
+        });
+
+        add(attachedDialog, openSelfAttachedButton, openAttachedButton,
+            changeDimensionSelfAttachedButton, changeDimensionAttachedButton);
     }
 }
