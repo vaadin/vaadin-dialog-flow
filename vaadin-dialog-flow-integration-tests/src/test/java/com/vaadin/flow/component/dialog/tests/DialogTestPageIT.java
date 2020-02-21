@@ -259,12 +259,7 @@ public class DialogTestPageIT extends AbstractComponentIT {
         Long overLayWidthBeforeResize = getSizeFromElement(overlay,
                 ElementConstants.STYLE_WIDTH);
 
-        WebElement resizerSE = getInShadowRoot(overlayContent,
-                By.cssSelector(".resizer.se"));
-
-        Actions resizeAction = new Actions(getDriver());
-        resizeAction.dragAndDropBy(resizerSE, 50, 50);
-        resizeAction.perform();
+        resizeDialog(overlayContent);
 
         Long overLayHeightAfterResize = getSizeFromElement(overlay,
                 ElementConstants.STYLE_HEIGHT);
@@ -288,6 +283,27 @@ public class DialogTestPageIT extends AbstractComponentIT {
 
         Assert.assertEquals(overLayHeightAfterResize, overLayHeightAfterReopen);
         Assert.assertEquals(overLayWidthAfterResize, overLayWidthAfterReopen);
+    }
+
+    @Test
+    public void resizableDialogListenerIsCalled() {
+        findElement(By.id("dialog-resizable-open-button")).click();
+
+        WebElement overlayContent = getOverlayContent();
+
+        resizeDialog(overlayContent);
+
+        WebElement message = findElement(By.id("dialog-resizable-message"));
+        Assert.assertEquals(message.getText(), "Rezise listener was called");
+    }
+
+    private void resizeDialog(WebElement overlayContent) {
+        WebElement resizerSE = getInShadowRoot(overlayContent, 
+                By.cssSelector(".resizer.se"));
+
+        Actions resizeAction = new Actions(getDriver());
+        resizeAction.dragAndDropBy(resizerSE, 50, 50);
+        resizeAction.perform();
     }
 
     private Long getSizeFromElement(WebElement element, String cssProperty) {

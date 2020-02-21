@@ -176,6 +176,13 @@ public class DialogTestPage extends Div {
         dialog.setId("dialog-resizable");
         dialog.setResizable(true);
 
+        Div message = new Div();
+        message.setId("dialog-resizable-message");
+
+        dialog.addResizeListener(e -> {
+            message.setText("Rezise listener was called");
+        });
+
         NativeButton closeButton = new NativeButton("close",
                 e -> dialog.close());
         closeButton.setId("dialog-resizable-close-button");
@@ -185,6 +192,6 @@ public class DialogTestPage extends Div {
                 e -> dialog.open());
         openDialog.setId("dialog-resizable-open-button");
 
-        add(openDialog);
+        add(openDialog, message);
     }
 }
