@@ -272,6 +272,7 @@ public class DialogTestPageIT extends AbstractComponentIT {
                 overLayWidthAfterResize);
 
         findElement(By.id("dialog-resizable-close-button")).click();
+        waitForElementNotPresent(By.tagName(DIALOG_OVERLAY_TAG));
         findElement(By.id("dialog-resizable-open-button")).click();
 
         overlay = getInShadowRoot(getOverlayContent(), By.id("overlay"));
