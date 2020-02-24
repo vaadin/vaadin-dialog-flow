@@ -83,8 +83,8 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
         });
 
         addListener(DialogResizeEvent.class, event -> {
-            setWidth(event.getWidth());
-            setHeight(event.getHeight());
+            width = event.getWidth();
+            height = event.getHeight();
         });
     }
 
@@ -570,7 +570,7 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
 
     private void setDimension(String dimension, String value) {
         getElement()
-            .executeJs("this.$.overlay.$.overlay.style."+dimension+"=$0", value);
+            .executeJs("this.$.overlay.$.overlay.style[$0]=$1", dimension, value);
     }
 
     private void attachComponentRenderer() {
