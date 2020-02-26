@@ -191,7 +191,7 @@ public class DialogView extends DemoView {
         // source-example-heading: Modeless Draggable Resizable Dialog
         Dialog firstDialog = new Dialog();
         firstDialog.add(
-            new Label("This is the first dialog"),
+            new Text("This is the first dialog"),
             new Button("Close", e -> firstDialog.close())
         );
         firstDialog.setModal(false);
@@ -200,7 +200,7 @@ public class DialogView extends DemoView {
         
         Dialog secondDialog = new Dialog();
         secondDialog.add(
-            new Label("This is the second dialog"),
+            new Text("This is the second dialog"),
             new Button("Close", e -> secondDialog.close())
         );
         secondDialog.setModal(false);
