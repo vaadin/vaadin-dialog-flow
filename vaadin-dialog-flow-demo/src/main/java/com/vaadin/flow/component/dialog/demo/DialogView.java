@@ -18,6 +18,7 @@ package com.vaadin.flow.component.dialog.demo;
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
@@ -55,7 +56,7 @@ public class DialogView extends DemoView {
         // begin-source-example
         // source-example-heading: Sized dialog
         Dialog dialog = new Dialog();
-        dialog.add(new Label("Close me with the esc-key or an outside click"));
+        dialog.add(new Text("Close me with the esc-key or an outside click"));
 
         dialog.setWidth("400px");
         dialog.setHeight("150px");
@@ -103,7 +104,7 @@ public class DialogView extends DemoView {
         // source-example-heading: Close from server-side
         Label messageLabel = new Label();
 
-        Dialog dialog = new Dialog(new Label("Close me with the esc-key"));
+        Dialog dialog = new Dialog(new Text("Close me with the esc-key"));
         dialog.setCloseOnOutsideClick(false);
 
         dialog.addDialogCloseActionListener(e -> {
