@@ -24,8 +24,8 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Input;
-import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.NativeButton;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.demo.DemoView;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamRegistration;
@@ -78,23 +78,23 @@ public class DialogView extends DemoView {
         dialog.setCloseOnEsc(false);
         dialog.setCloseOnOutsideClick(false);
 
-        Label messageLabel = new Label();
+        Span message= new Span();
 
         Button confirmButton = new Button("Confirm", event -> {
-            messageLabel.setText("Confirmed!");
+            message.setText("Confirmed!");
             dialog.close();
         });
         Button cancelButton = new Button("Cancel", event -> {
-            messageLabel.setText("Cancelled...");
+            message.setText("Cancelled...");
             dialog.close();
         });
         dialog.add(confirmButton, cancelButton);
         // end-source-example
         button.addClickListener(event -> dialog.open());
 
-        messageLabel.setId("confirmation-dialog-label");
+        message.setId("confirmation-dialog-span");
         button.setId("confirmation-dialog-button");
-        addCard("Confirmation dialog", button, messageLabel);
+        addCard("Confirmation dialog", button, message);
     }
 
     private void addCloseFromServerSideDialog() {
@@ -102,22 +102,22 @@ public class DialogView extends DemoView {
 
         // begin-source-example
         // source-example-heading: Close from server-side
-        Label messageLabel = new Label();
+        Span message = new Span();
 
         Dialog dialog = new Dialog(new Text("Close me with the esc-key"));
         dialog.setCloseOnOutsideClick(false);
 
         dialog.addDialogCloseActionListener(e -> {
-            messageLabel.setText("Closed from server-side");
+            message.setText("Closed from server-side");
             dialog.close();
         });
         // end-source-example
 
         button.addClickListener(event -> dialog.open());
 
-        messageLabel.setId("server-side-close-dialog-label");
+        message.setId("server-side-close-dialog-span");
         button.setId("server-side-close-dialog-button");
-        addCard("Close from server-side", button, messageLabel);
+        addCard("Close from server-side", button, message);
     }
 
     private void addDialogWithFocusedElement() {
