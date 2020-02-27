@@ -119,6 +119,6 @@ public class DialogIT extends AbstractComponentIT {
 
     @Override
     protected String getTestPath() {
-        return ("/vaadin-dialog");
+        return ("/vaadin-dialog-view");
     }
 }
