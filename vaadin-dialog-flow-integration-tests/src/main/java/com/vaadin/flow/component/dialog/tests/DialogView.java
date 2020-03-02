@@ -15,9 +15,10 @@
  */
 package com.vaadin.flow.component.dialog.tests;
 
+import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.router.Route;
 
 /**
@@ -26,14 +27,32 @@ import com.vaadin.flow.router.Route;
  * @author Vaadin Ltd.
  *
  */
-@Route("initial-dialog-open")
-public class InitiallyOpenedDialogPage extends Div {
+@Route("dialog")
+public class DialogView extends Div {
 
-    public InitiallyOpenedDialogPage() {
-        Dialog dialog = new Dialog();
-        Label label = new Label("Label inside dialog");
-        label.setId("nested-component");
-        dialog.add(label);
-        dialog.open();
+    public DialogView() {
+        // TASK 1: Create a dialog e add some text content to it
+
+
+        // TASK 2: Create a button that opens the dialog on click
+
+
+        // TASK 3: Make dialog resizable
+
+
+        // TASK 4: Make dialog draggable
+
+
+        // TASK 5: Add a second dialog and configure both dialogs so that they 
+        // can be opened at the same time
+        //    Dialog secondDialog = new Dialog(new Text("A second dialog"));
+        //    secondDialog.setDraggable(true);
+        //    Button secondButton = new Button("open second dialog",
+        //             e -> secondDialog.open());
+        //    add(secondButton);
+
+
+       // TASK 6: (nice to have) make sure both dialogs can be closed by the user
+
     }
 }
