@@ -41,11 +41,6 @@
             <artifactId>vaadin-dialog-flow</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-dialog-flow-demo</artifactId>
-            <version>${project.version}</version>
-        </dependency>
 
         <!-- Test util -->
         <dependency>
