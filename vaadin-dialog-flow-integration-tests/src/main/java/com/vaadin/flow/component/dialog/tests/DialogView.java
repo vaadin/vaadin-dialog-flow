@@ -31,7 +31,7 @@ import com.vaadin.flow.router.Route;
 public class DialogView extends Div {
 
     public DialogView() {
-        // TASK 1: Create a dialog e add some text content to it
+        // TASK 1: Create a dialog and add some text content to it
 
 
         // TASK 2: Create a button that opens the dialog on click
