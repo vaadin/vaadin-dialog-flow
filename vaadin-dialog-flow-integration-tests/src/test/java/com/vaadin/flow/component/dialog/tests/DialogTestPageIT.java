@@ -383,9 +383,9 @@ public class DialogTestPageIT extends AbstractComponentIT {
         String overlayLeft = overlay.getCssValue("left");
         String overlayTop = overlay.getCssValue("top");
 
-        Actions resizeAction = new Actions(getDriver());
-        resizeAction.dragAndDropBy(container, 50, 50);
-        resizeAction.perform();
+        Actions dragAction = new Actions(getDriver());
+        dragAction.dragAndDropBy(container, 50, 50);
+        dragAction.perform();
 
         Assert.assertNotEquals(overlayLeft, overlay.getCssValue("left"));
         Assert.assertNotEquals(overlayTop, overlay.getCssValue("top"));
