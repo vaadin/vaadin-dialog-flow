@@ -62,7 +62,7 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
         getElement().appendChild(template);
 
         container = new Element("div");
-        container.setAttribute("class", "draggable");
+        container.getClassList().add("draggable");
         container.getStyle().set(ElementConstants.STYLE_WIDTH, "100%");
         container.getStyle().set(ElementConstants.STYLE_HEIGHT, "100%");
 
