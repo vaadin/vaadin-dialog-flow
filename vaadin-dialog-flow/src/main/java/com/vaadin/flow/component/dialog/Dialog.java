@@ -51,6 +51,10 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
     private int onCloseConfigured;
     private String width;
     private String height;
+    private String minWidth;
+    private String minHeight;
+    private String maxWidth;
+    private String maxHeight;
 
     /**
      * Creates an empty dialog.
@@ -156,6 +160,50 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
     @Override
     public String getHeight() {
         return height;
+    }
+
+    @Override
+    public void setMinWidth(String value) {
+        minWidth = value;
+        setDimension(ElementConstants.STYLE_MIN_WIDTH, value);
+    }
+
+    @Override
+    public void setMaxWidth(String value) {
+        maxWidth = value;
+        setDimension(ElementConstants.STYLE_MAX_WIDTH, value);
+    }
+
+    @Override
+    public String getMinWidth() {
+        return minWidth;
+    }
+
+    @Override
+    public String getMaxWidth() {
+        return maxWidth;
+    }
+
+    @Override
+    public void setMinHeight(String value) {
+        minHeight = value;
+        setDimension(ElementConstants.STYLE_MIN_HEIGHT, value);
+    }
+
+    @Override
+    public void setMaxHeight(String value) {
+        maxHeight = value;
+        setDimension(ElementConstants.STYLE_MAX_HEIGHT, value);
+    }
+
+    @Override
+    public String getMinHeight() {
+        return minHeight;
+    }
+
+    @Override
+    public String getMaxHeight() {
+        return maxHeight;
     }
 
     /**
