@@ -1,0 +1,7 @@
+vaadin-dialog-overlay flow-component-renderer > div {
+  height: 100%;
+}
+.content-wrapper {
+  max-width: 500px;
+  overflow: auto;
+}

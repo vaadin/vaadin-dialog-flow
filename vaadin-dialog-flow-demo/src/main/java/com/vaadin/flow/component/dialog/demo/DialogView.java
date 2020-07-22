@@ -21,7 +21,10 @@ import java.nio.charset.StandardCharsets;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dialog.Dialog;
+import com.vaadin.flow.component.dependency.CssImport;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Input;
 import com.vaadin.flow.component.html.NativeButton;
@@ -37,18 +40,59 @@ import com.vaadin.flow.server.StreamResource;
  * @author Vaadin Ltd
  */
 @Route("vaadin-dialog")
+@CssImport("./styles/shared-styles.css")
 public class DialogView extends DemoView {
 
     private static final String BUTTON_CAPTION = "Open dialog";
 
     @Override
     public void initView() {
+        addDialogWithCombo();
         addBasicDialog();
         addConfirmationDialog();
         addCloseFromServerSideDialog();
         addDialogWithFocusedElement();
         addStyledDialogContent();
         addModelessDraggableResizableDialog();
+    }
+
+    private void addDialogWithCombo() {
+        NativeButton openDialog = new NativeButton(BUTTON_CAPTION);
+
+        String text = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium reprehenderit distinctio pariatur obcaecati!"
+            + "Quidem, voluptatum. Inventore aut eum quis repellat labore ratione, maxime odit saepe debitis assumenda harum magni unde?"
+            + " Lorem, ipsum dolor sit amet consectetur adipisicing elit. In deleniti repudiandae magni ex alias pariatur, molestiae dolor "
+            + "expedita odit iste deserunt est suscipit aut omnis inventore, libero dolore. Asperiores, assumenda. Lorem ipsum dolor sit amet"
+            + " consectetur adipisicing elit. Assumenda id laudantium quod deleniti neque! Expedita consequuntur necessitatibus earum tenetur "
+            + "odio provident deleniti sed praesentium illum facilis id, corporis, illo ab.";
+
+        // begin-source-example
+        // source-example-heading: Dialog with a combobox
+        Dialog dialog = new Dialog();
+        VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout.setSizeFull();
+        verticalLayout.setPadding(false);
+        Div header = new Div();
+        header.setText("Header");
+
+        Div footer = new Div();
+        footer.setText("footer");
+        Div content = new Div();
+        Div textContent = new Div();
+        ComboBox<String> objectComboBox = new ComboBox<>();
+        objectComboBox.setItems("item 1","item 2", "item 3");
+        content.add(objectComboBox);
+        content.add(textContent);
+        textContent.setText(text+text+text+text+text+text);
+        content.addClassName("content-wrapper");
+        verticalLayout.add(header, content, footer);
+
+        dialog.add(verticalLayout);
+
+        openDialog.addClickListener(e -> dialog.open());
+        // end-source-example
+
+        addCard("Dialog with a combobox", openDialog);
     }
 
     private void addBasicDialog() {
@@ -197,7 +241,7 @@ public class DialogView extends DemoView {
         firstDialog.setModal(false);
         firstDialog.setDraggable(true);
         firstDialog.setResizable(true);
-        
+
         Dialog secondDialog = new Dialog();
         secondDialog.add(
             new Text("This is the second dialog"),
