@@ -68,7 +68,8 @@ public class Dialog extends GeneratedVaadinDialog<Dialog>
         container.getClassList().add("draggable-leaf-only");
         container.getStyle().set(ElementConstants.STYLE_WIDTH, "100%");
         container.getStyle().set(ElementConstants.STYLE_HEIGHT, "100%");
-        container.getStyle().set("display", "inline-block");
+        container.getStyle().set("display", "flex");
+        container.getStyle().set("flex-direction", "column");
 
         getElement().appendVirtualChild(container);
 
