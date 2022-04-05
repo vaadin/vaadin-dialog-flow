@@ -26,6 +26,7 @@ import org.openqa.selenium.WebElement;
 
 import com.vaadin.flow.testutil.AbstractComponentIT;
 import com.vaadin.flow.testutil.TestPath;
+import com.vaadin.testbench.TestBenchElement;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -131,26 +132,26 @@ public class DialogTestPageIT extends AbstractComponentIT {
 
         waitForElementPresent(By.id("empty-dialog"));
 
-        WebElement element = findElement(By.id("overlay"));
-        List<WebElement> content = findInShadowRoot(element, By.id("content"));
+        TestBenchElement element = wrap(TestBenchElement.class,
+                findElement(By.id("overlay")));
+        TestBenchElement content = element.$("*").id("content");
 
-        Assert.assertFalse("Couldn't find content for dialog",
-                content.isEmpty());
+        Assert.assertNotNull("Couldn't find content for dialog", content);
 
         Long contentPadding =
-                getLongValue(content.get(0).getCssValue("padding-left"))
+                getLongValue(content.getCssValue("padding-left"))
                         + getLongValue(
-                        content.get(0).getCssValue("padding-right"));
+                        content.getCssValue("padding-right"));
 
         Long contentMargin =
-                getLongValue(content.get(0).getCssValue("margin-left"))
+                getLongValue(content.getCssValue("margin-left"))
                         + getLongValue(
-                        content.get(0).getCssValue("margin-right"));
+                        content.getCssValue("margin-right"));
 
         Long endpoint = contentPadding + contentMargin;
 
         assertThat("Content didn't have a with over the padding and margin",
-                getLongValue(content.get(0).getCssValue("width")),
+                getLongValue(content.getCssValue("width")),
                 greaterThan(endpoint));
     }
 
