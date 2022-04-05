@@ -25,6 +25,7 @@ import org.openqa.selenium.WebElement;
 
 import com.vaadin.flow.testutil.AbstractComponentIT;
 import com.vaadin.flow.testutil.TestPath;
+import com.vaadin.testbench.TestBenchElement;
 
 @TestPath("dialog-template-test")
 public class DialogWithTemplateIT extends AbstractComponentIT {
@@ -43,11 +44,11 @@ public class DialogWithTemplateIT extends AbstractComponentIT {
         waitForElementPresent(By.tagName(DialogTestPageIT.DIALOG_OVERLAY_TAG));
         WebElement overlay = findElement(
                 By.tagName(DialogTestPageIT.DIALOG_OVERLAY_TAG));
-        WebElement template = overlay.findElement(By.id("template"));
+        TestBenchElement template = wrap(TestBenchElement.class,
+                overlay.findElement(By.id("template")));
 
-        WebElement btn = findInShadowRoot(template, By.id("btn")).get(0);
-        WebElement container = findInShadowRoot(template, By.id("container"))
-                .get(0);
+        WebElement btn = template.$("*").id("btn");
+        WebElement container = template.$("*").id("container");
 
         List<WebElement> spans = container.findElements(By.tagName("span"));
         Assert.assertTrue(spans.isEmpty());

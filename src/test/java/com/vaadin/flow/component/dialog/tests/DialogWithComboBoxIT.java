@@ -23,6 +23,7 @@ import org.openqa.selenium.WebElement;
 
 import com.vaadin.flow.testutil.AbstractComponentIT;
 import com.vaadin.flow.testutil.TestPath;
+import com.vaadin.testbench.TestBenchElement;
 
 @TestPath("dialog-with-combo")
 public class DialogWithComboBoxIT extends AbstractComponentIT {
@@ -49,8 +50,8 @@ public class DialogWithComboBoxIT extends AbstractComponentIT {
 
         findElement(By.id("open-dialog")).click();
 
-        WebElement combo = findElement(By.id("combo"));
-        getInShadowRoot(combo, By.id("toggleButton")).click();
+        TestBenchElement combo = $(TestBenchElement.class).id("combo");
+        combo.$("*").id("toggleButton").click();
 
         WebElement info = findElement(By.id("info"));
         waitUntil(driver -> info.getText().equals(Boolean.TRUE.toString()));
